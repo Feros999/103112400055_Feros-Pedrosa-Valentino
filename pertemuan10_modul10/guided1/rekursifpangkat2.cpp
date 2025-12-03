@@ -1,0 +1,23 @@
+#include<iostream>
+
+using namespace std;
+
+int pangkat_2(int x){ //x adalah pangkatnya
+    if(x == 0){ //basis
+        return 1;
+    } else if (x > 0){ //rekurens
+        return 2 * pangkat_2(x-1);
+    }
+}
+
+int main(){
+    cout << "=== REKURSIF PANGKAT 2 ===" << endl;
+
+    int x;
+    cout << "masukkan nilai x: "; 
+    cin >> x;
+    cout << endl;
+    cout << "2 pangkat " << x << " adalah : " << pangkat_2(x);
+
+    return 0;
+}
