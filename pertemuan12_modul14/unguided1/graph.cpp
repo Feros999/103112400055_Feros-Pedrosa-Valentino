@@ -1,0 +1,70 @@
+#include "graph.h"
+
+void CreateGraph(Graph &G) {
+    G.first = NULL;
+}
+
+void InsertNode(Graph &G, infoGraph X) {
+    // Alokasi Node Baru
+    adrNode P = new ElmNode;
+    P->info = X;
+    P->visited = 0;
+    P->firstEdge = NULL;
+    P->Next = NULL;
+
+    if (G.first == NULL) {
+        G.first = P;
+    } else {
+        adrNode temp = G.first;
+        while (temp->Next != NULL) {
+            temp = temp->Next;
+        }
+        temp->Next = P;
+    }
+}
+
+void ConnectNode(adrNode N1, adrNode N2) {
+    if (N1 != NULL && N2 != NULL) {
+        // Karena Graph Tidak Berarah, buat edge dua arah.
+        
+        // 1. Buat Edge dari N1 ke N2
+        adrEdge E1 = new ElmEdge;
+        E1->Node = N2;
+        E1->Next = N1->firstEdge; // Insert First pada list edge N1
+        N1->firstEdge = E1;
+
+        // 2. Buat Edge dari N2 ke N1
+        adrEdge E2 = new ElmEdge;
+        E2->Node = N1;
+        E2->Next = N2->firstEdge; // Insert First pada list edge N2
+        N2->firstEdge = E2;
+    }
+}
+
+void PrintInfoGraph(Graph G) {
+    adrNode P = G.first;
+    while (P != NULL) {
+        cout << "Node " << P->info << " terhubung dengan: ";
+        adrEdge E = P->firstEdge;
+        if (E == NULL) {
+            cout << "(tidak ada)";
+        }
+        while (E != NULL) {
+            cout << E->Node->info << " ";
+            E = E->Next;
+        }
+        cout << endl;
+        P = P->Next;
+    }
+}
+
+adrNode FindNode(Graph G, infoGraph X) {
+    adrNode P = G.first;
+    while (P != NULL) {
+        if (P->info == X) {
+            return P;
+        }
+        P = P->Next;
+    }
+    return NULL;
+}
